@@ -3,7 +3,7 @@
  * All fetch calls to the FastAPI backend are centralized here.
  */
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api'
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || (process.env.NODE_ENV === 'production' ? '/_backend/api' : 'http://localhost:8000/api')
 
 export interface ScanIndicator {
   type: string
