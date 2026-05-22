@@ -65,7 +65,7 @@ export default function Navbar() {
         
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           <Link href="/login" style={{ fontSize: 13, fontWeight: 500, color: 'var(--color-secondary)', textDecoration: 'none' }}>Log in</Link>
-          <Link href="/scan" className="btn-primary" style={{ padding: '8px 16px', fontSize: 13, borderRadius: 8 }}>Sign up</Link>
+          <Link href="/signup" className="btn-primary" style={{ padding: '8px 16px', fontSize: 13, borderRadius: 8 }}>Sign up</Link>
         </div>
       </header>
     </div>

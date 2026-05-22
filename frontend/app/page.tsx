@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import { useState } from 'react'
 import { Shield, ArrowRight, Activity, Search, ShieldCheck, Zap, Lock, Database } from 'lucide-react'
 import Navbar from '@/components/Navbar'
 import LiquidBackground from '@/components/LiquidBackground'
@@ -10,6 +11,8 @@ import Logo from '@/components/Logo'
 import IntroLoader from '@/components/IntroLoader'
 
 export default function LandingPage() {
+  const [timeframe, setTimeframe] = useState<'1h' | '24h' | '7d'>('24h')
+
   return (
     <>
       <IntroLoader />
@@ -105,7 +108,7 @@ export default function LandingPage() {
             <BorderGlow
               className="backdrop-blur-xl"
               glowColor="0 0 100"
-              backgroundColor="rgba(15, 15, 15, 0.7)"
+              backgroundColor="rgba(15, 15, 15, 0.3)"
               borderRadius={12}
               colors={['#444', '#111', '#666']}
               glowRadius={40}
@@ -114,9 +117,9 @@ export default function LandingPage() {
             >
               {/* Window header */}
               <div style={{ padding: '12px 16px', borderBottom: '1px solid var(--color-border-subtle)', display: 'flex', gap: 8 }}>
-                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#333' }} />
-                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#333' }} />
-                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#333' }} />
+                <div style={{ width: 12, height: 12, borderRadius: '50%', background: '#ff5f56' }} />
+                <div style={{ width: 12, height: 12, borderRadius: '50%', background: '#ffbd2e' }} />
+                <div style={{ width: 12, height: 12, borderRadius: '50%', background: '#27c93f' }} />
               </div>
 
               <div style={{ 
@@ -131,9 +134,9 @@ export default function LandingPage() {
                       <p style={{ color: 'var(--color-muted)', fontSize: 13 }}>Requests per minute across all endpoints</p>
                     </div>
                     <div style={{ display: 'flex', gap: 4 }}>
-                      <span style={{ padding: '4px 10px', borderRadius: 4, fontSize: 12, color: 'var(--color-muted)' }}>1h</span>
-                      <span style={{ padding: '4px 10px', borderRadius: 4, background: '#1a1a1a', fontSize: 12, color: '#fff' }}>24h</span>
-                      <span style={{ padding: '4px 10px', borderRadius: 4, fontSize: 12, color: 'var(--color-muted)' }}>7d</span>
+                      <button onClick={() => setTimeframe('1h')} style={{ padding: '4px 10px', borderRadius: 4, background: timeframe === '1h' ? '#1a1a1a' : 'transparent', fontSize: 12, color: timeframe === '1h' ? '#fff' : 'var(--color-muted)', border: 'none', cursor: 'pointer', transition: 'all 0.2s' }}>1h</button>
+                      <button onClick={() => setTimeframe('24h')} style={{ padding: '4px 10px', borderRadius: 4, background: timeframe === '24h' ? '#1a1a1a' : 'transparent', fontSize: 12, color: timeframe === '24h' ? '#fff' : 'var(--color-muted)', border: 'none', cursor: 'pointer', transition: 'all 0.2s' }}>1 Day</button>
+                      <button onClick={() => setTimeframe('7d')} style={{ padding: '4px 10px', borderRadius: 4, background: timeframe === '7d' ? '#1a1a1a' : 'transparent', fontSize: 12, color: timeframe === '7d' ? '#fff' : 'var(--color-muted)', border: 'none', cursor: 'pointer', transition: 'all 0.2s' }}>7 Days</button>
                     </div>
                   </div>
                   
@@ -149,8 +152,24 @@ export default function LandingPage() {
                           <stop offset="100%" stopColor="rgba(255,255,255,0)" />
                         </linearGradient>
                       </defs>
-                      <path d="M0,25 L10,22 L20,24 L30,15 L40,18 L50,8 L60,12 L70,5 L80,10 L90,2 L100,6 L100,30 L0,30 Z" fill="url(#chartGrad)" />
-                      <path d="M0,25 L10,22 L20,24 L30,15 L40,18 L50,8 L60,12 L70,5 L80,10 L90,2 L100,6" fill="none" stroke="#fff" strokeWidth="0.5" />
+                      <path 
+                        d={
+                          timeframe === '1h' ? "M0,20 L10,15 L20,25 L30,10 L40,15 L50,5 L60,20 L70,10 L80,15 L90,2 L100,8 L100,30 L0,30 Z" :
+                          timeframe === '7d' ? "M0,28 L10,26 L20,27 L30,22 L40,24 L50,18 L60,20 L70,15 L80,12 L90,8 L100,10 L100,30 L0,30 Z" :
+                          "M0,25 L10,22 L20,24 L30,15 L40,18 L50,8 L60,12 L70,5 L80,10 L90,2 L100,6 L100,30 L0,30 Z"
+                        } 
+                        fill="url(#chartGrad)" 
+                        style={{ transition: 'd 0.5s ease' }}
+                      />
+                      <path 
+                        d={
+                          timeframe === '1h' ? "M0,20 L10,15 L20,25 L30,10 L40,15 L50,5 L60,20 L70,10 L80,15 L90,2 L100,8" :
+                          timeframe === '7d' ? "M0,28 L10,26 L20,27 L30,22 L40,24 L50,18 L60,20 L70,15 L80,12 L90,8 L100,10" :
+                          "M0,25 L10,22 L20,24 L30,15 L40,18 L50,8 L60,12 L70,5 L80,10 L90,2 L100,6"
+                        } 
+                        fill="none" stroke="#fff" strokeWidth="0.5" 
+                        style={{ transition: 'd 0.5s ease' }}
+                      />
                     </svg>
                   </div>
                 </div>
@@ -224,7 +243,7 @@ export default function LandingPage() {
                 <BorderGlow
                   className="backdrop-blur-xl w-full h-full"
                   glowColor="0 0 100"
-                  backgroundColor="rgba(15, 15, 15, 0.7)"
+                  backgroundColor="rgba(15, 15, 15, 0.3)"
                   borderRadius={8}
                   colors={['#444', '#111', '#666']}
                   glowRadius={30}
@@ -242,7 +261,7 @@ export default function LandingPage() {
                     </div>
                     
                     <h3 style={{ fontSize: 16, fontWeight: 500, marginBottom: 8, color: '#fff' }}>{feat.title}</h3>
-                    <p style={{ fontSize: 14, color: 'var(--color-muted)', lineHeight: 1.6 }}>{feat.description}</p>
+                    <p style={{ fontSize: 14, color: 'var(--color-muted)', lineHeight: 1.6 }}>{feat.desc}</p>
                   </div>
                 </BorderGlow>
               </motion.div>
